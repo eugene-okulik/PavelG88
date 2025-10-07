@@ -25,7 +25,3 @@ my_dict['set'].remove('a1')
 print(my_dict['set'])
 
 print(my_dict)
-
-
-
-
