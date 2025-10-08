@@ -12,7 +12,7 @@ print(my_dict['list'])
 my_dict['list'].pop(1)
 print(my_dict['list'])
 
-my_dict['dict']['i am a tuple'] = 'from mars'
+my_dict['dict'][('i am a tuple',)] = 'from mars'
 print(my_dict['dict'])
 
 my_dict['dict'].pop('key1')
