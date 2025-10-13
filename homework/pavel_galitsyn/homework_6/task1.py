@@ -1,9 +1,9 @@
 text = ('"Etiam tincidunt neque erat, quis molestie enim imperdiet vel.'
         ' Integer urna nisl, facilisis vitae semper at, dignissim vitae libero"')
-#print(text)
+# print(text)
 
 words = text.split()
-#print(words)
+# print(words)
 
 new_words = []
 for word in words:

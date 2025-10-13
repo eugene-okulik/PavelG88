@@ -5,5 +5,5 @@ for numbers in range(1, 101):
         print("Buzz")
     elif numbers % 3 == 0:
         print("Fuzz")
-    else :
+    else:
         print(numbers)
