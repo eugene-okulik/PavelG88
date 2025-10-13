@@ -3,6 +3,7 @@ def result(text):
     number = int(number)
     print(number + 10)
 
+
 result("результат операции: 42")
 result("результат операции: 54")
 result("результат работы программы: 209")
