@@ -24,6 +24,7 @@ def calc(first, second, operation):
     elif operation == '/':
         return first / second
 
+
 a = int(input("Введите первое число: "))
 b = int(input("Введите второе число: "))
 
