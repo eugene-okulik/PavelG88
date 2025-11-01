@@ -1,0 +1,59 @@
+INSERT INTO students (name, second_name)
+VALUES ('Al', 'Pachino');
+
+SELECT * FROM students
+WHERE name = 'Al';
+
+INSERT INTO books (title, taken_by_student_id)
+VALUES ('Shadow in paradise', '21626');
+
+INSERT INTO `groups`  (title, start_date, end_date)
+VALUES ('Gruppa_dlya_pachino', '2025-10-29', '2025-12-31');
+
+SELECT * FROM `groups` g
+WHERE title = 'Gruppa_dlya_pachino';
+
+UPDATE `students`
+SET group_id = 21517
+WHERE id = 21626;
+
+INSERT INTO subjects (title)
+VALUES ('Predmet_Al3');
+
+SELECT * FROM subjects s
+WHERE title IN ('Predmet_Al1', 'Predmet_Al2', 'Predmet_Al3');
+
+INSERT INTO lessons (title, subject_id)
+VALUES ('lesson1', '12767'), ('lesson2', '12767'), ('lesson1', '12768'), ('lesson2', '12768'), ('lesson1', '12769'), ('lesson2', '12769');
+
+SELECT * FROM lessons
+WHERE subject_id  IN ('12767', '12768', '12769');
+
+INSERT INTO marks (value, lesson_id, student_id)
+VALUES ('3', '73176', '21626' ), ('4', '73177', '21626' ), ('5', '73178', '21626' ), ('4', '73179', '21626' ), ('3', '73180', '21626' ), ('5', '73181', '21626' );
+
+SELECT * FROM marks
+WHERE student_id  IN ('21626');
+
+SELECT * FROM books
+WHERE taken_by_student_id  IN ('21626');
+
+SELECT
+    s.name AS student_name,
+    s.second_name AS student_second_name,
+    g.title AS group_title,
+    b.title AS book_title,
+    sub.title AS subject_title,
+    l.title AS lesson_title,
+    m.value AS mark
+FROM students s
+LEFT JOIN `groups` g ON s.group_id = g.id
+LEFT JOIN books b ON b.taken_by_student_id = s.id
+LEFT JOIN marks m ON m.student_id = s.id
+LEFT JOIN lessons l ON m.lesson_id = l.id
+LEFT JOIN subjects sub ON l.subject_id = sub.id
+WHERE s.name = 'Al';
+
+
+
+
