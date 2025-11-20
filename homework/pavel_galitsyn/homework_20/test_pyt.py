@@ -1,5 +1,6 @@
 import requests
 import pytest
+import allure
 
 BASE_URL = "http://objapi.course.qa-practice.com/object"
 
@@ -21,15 +22,22 @@ def print_before_after():
 @pytest.fixture()
 def new_obj():
     body = {"name": "test_name", "data": {"info": "test_data"}}
-    response = requests.post(BASE_URL, json=body)
+    with allure.step("Создание объекта в фикстуре"):
+        response = requests.post(BASE_URL, json=body)
+        allure.attach(str(response.json()), "Response", allure.attachment_type.JSON)
+
     obj_id = response.json()["id"]
 
     yield obj_id
 
-    requests.delete(f"{BASE_URL}/{obj_id}")
+    with allure.step("Удаление объекта после теста"):
+        requests.delete(f"{BASE_URL}/{obj_id}")
 
 
-@pytest.mark.critical
+@allure.epic("Object API")
+@allure.feature("Создание объекта")
+@allure.story("Создание объекта с разными payload")
+@allure.severity(allure.severity_level.CRITICAL)
 @pytest.mark.parametrize(
     "name,data",
     [
@@ -39,38 +47,62 @@ def new_obj():
     ]
 )
 def test_create_object(name, data):
-    body = {"name": name, "data": data}
-    response = requests.post(BASE_URL, json=body)
+    with allure.step("Отправка POST-запроса на создание объекта"):
+        body = {"name": name, "data": data}
+        response = requests.post(BASE_URL, json=body)
+        allure.attach(str(body), "Request body", allure.attachment_type.JSON)
+        allure.attach(str(response.json()), "Response", allure.attachment_type.JSON)
 
-    assert response.status_code == 200
-    resp_json = response.json()
-    assert resp_json["name"] == name
-    assert resp_json["data"] == data
+    with allure.step("Проверка ответа"):
+        assert response.status_code == 200
+        resp_json = response.json()
+        assert resp_json["name"] == name
+        assert resp_json["data"] == data
 
 
+@allure.epic("Object API")
+@allure.feature("Обновление объекта")
+@allure.story("PUT — Полное обновление объекта")
 def test_put_object(new_obj):
-    body = {"name": "updated_name", "data": {"info": "updated_data"}}
-    response = requests.put(f"{BASE_URL}/{new_obj}", json=body)
+    with allure.step("Отправка PUT-запроса"):
+        body = {"name": "updated_name", "data": {"info": "updated_data"}}
+        response = requests.put(f"{BASE_URL}/{new_obj}", json=body)
+        allure.attach(str(body), "PUT Request body", allure.attachment_type.JSON)
+        allure.attach(str(response.json()), "Response", allure.attachment_type.JSON)
 
-    assert response.status_code == 200
-    resp_json = response.json()
-    assert resp_json["name"] == "updated_name"
-    assert resp_json["data"]["info"] == "updated_data"
+    with allure.step("Проверка результата"):
+        assert response.status_code == 200
+        json = response.json()
+        assert json["name"] == "updated_name"
+        assert json["data"]["info"] == "updated_data"
 
 
-@pytest.mark.medium
+@allure.epic("Object API")
+@allure.feature("Обновление объекта")
+@allure.story("PATCH — Частичное обновление объекта")
+@allure.severity(allure.severity_level.NORMAL)
 def test_patch_object(new_obj):
-    body = {"name": "patched_name"}
-    response = requests.patch(f"{BASE_URL}/{new_obj}", json=body)
+    with allure.step("Отправка PATCH-запроса"):
+        body = {"name": "patched_name"}
+        response = requests.patch(f"{BASE_URL}/{new_obj}", json=body)
+        allure.attach(str(body), "PATCH body", allure.attachment_type.JSON)
+        allure.attach(str(response.json()), "Response", allure.attachment_type.JSON)
 
-    assert response.status_code == 200
-    resp_json = response.json()
-    assert resp_json["name"] == "patched_name"
+    with allure.step("Проверка результата"):
+        assert response.status_code == 200
+        assert response.json()["name"] == "patched_name"
 
 
+@allure.epic("Object API")
+@allure.feature("Удаление объекта")
+@allure.story("Удаление и проверка что объект не существует")
 def test_delete_object(new_obj):
-    response_delete = requests.delete(f"{BASE_URL}/{new_obj}")
-    assert response_delete.status_code == 200
+    with allure.step("Удаление объекта"):
+        response_delete = requests.delete(f"{BASE_URL}/{new_obj}")
+        allure.attach(str(response_delete.status_code), "Delete status")
+        assert response_delete.status_code == 200
 
-    response_get = requests.get(f"{BASE_URL}/{new_obj}")
-    assert response_get.status_code == 404
+    with allure.step("Проверка что объект удалён"):
+        response_get = requests.get(f"{BASE_URL}/{new_obj}")
+        allure.attach(str(response_get.status_code), "Get after delete status")
+        assert response_get.status_code == 404
