@@ -1,5 +1,6 @@
 import allure
 
+
 class Endpoint:
     base_url = "http://objapi.course.qa-practice.com"
     resource = "object"   # путь к ресурсу, меняется у наследников если надо
