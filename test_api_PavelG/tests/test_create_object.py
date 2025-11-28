@@ -1,23 +1,23 @@
+import pytest
 import allure
-from test_api_PavelG.endpoints.create_object import CreateObject
-
 
 @allure.epic("Object API")
 @allure.feature("Создание объекта")
-@allure.story("Успешное создание объекта")
-def test_create_object():
-    creator = CreateObject()
+@pytest.mark.parametrize(
+    "name,data",
+    [
+        ("object_1", {"info": "data1"}),
+        ("object_2", {"info": "data2"}),
+        ("object_3", {"info": "data3"}),
+    ]
+)
+def test_create_object(creator, name, data):
+    payload = {"name": name, "data": data}
 
-    payload = {
-        "name": "object_name",
-        "data": {"info": "some_info"}
-    }
-
-    with allure.step("Отправляем POST запрос"):
+    with allure.step("Создаём объект"):
         creator.create(payload)
+        creator.check_status(200)
 
-    creator.check_status_200()
-
-    with allure.step("Проверяем поля в ответе"):
-        assert creator.json["name"] == payload["name"]
-        assert creator.json["data"] == payload["data"]
+    with allure.step("Проверяем поля"):
+        creator.check_field("name", name)
+        creator.check_field("data", data)

@@ -1,22 +1,13 @@
 import allure
 
-from test_api_PavelG.endpoints.patch_object import PatchObject
-
-
 @allure.epic("Object API")
-@allure.feature("Обновление объекта")
-@allure.story("Частичное обновление объекта (PATCH)")
-def test_patch_object(new_obj):
-    patcher = PatchObject()
+@allure.feature("PATCH частичное обновление")
+def test_patch_object(patcher, new_obj):
+    payload = {"name": "patched_name"}
 
-    payload = {
-        "name": "patched_name"
-    }
-
-    with allure.step("Отправляем PATCH запрос"):
+    with allure.step("Отправляем PATCH"):
         patcher.patch(new_obj, payload)
+        patcher.check_status(200)
 
-    patcher.check_status_200()
-
-    with allure.step("Проверяем результат"):
-        assert patcher.json["name"] == payload["name"]
+    with allure.step("Проверяем поля"):
+        patcher.check_field("name", "patched_name")
