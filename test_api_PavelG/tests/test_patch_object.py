@@ -1,5 +1,6 @@
 import allure
 
+
 @allure.epic("Object API")
 @allure.feature("PATCH частичное обновление")
 def test_patch_object(patcher, new_obj):

@@ -1,5 +1,6 @@
 import allure
 
+
 @allure.epic("Object API")
 @allure.feature("Удаление объекта")
 def test_delete_object(deleter, getter, new_obj):

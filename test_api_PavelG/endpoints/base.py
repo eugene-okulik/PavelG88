@@ -9,7 +9,7 @@ class BaseClient:
         self.response = response
         try:
             self.json = response.json()
-        except:
+        except ValueError:
             self.json = None
 
     def check_status(self, expected):

@@ -1,6 +1,7 @@
 import pytest
 import allure
 
+
 @allure.epic("Object API")
 @allure.feature("Создание объекта")
 @pytest.mark.parametrize(

@@ -7,6 +7,7 @@ from test_api_PavelG.endpoints.put_object import PutObject
 from test_api_PavelG.endpoints.patch_object import PatchObject
 from test_api_PavelG.endpoints.delete_object import DeleteObject
 
+
 BASE_URL = "http://objapi.course.qa-practice.com/object"
 
 

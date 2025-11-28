@@ -1,5 +1,5 @@
-from .base import BaseClient
 import allure
+from .base import BaseClient
 
 
 class PatchObject(BaseClient):

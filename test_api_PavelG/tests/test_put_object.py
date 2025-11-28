@@ -1,5 +1,6 @@
 import allure
 
+
 @allure.epic("Object API")
 @allure.feature("Обновление объекта")
 def test_put_object(updater, getter, new_obj):
