@@ -17,8 +17,10 @@ class BaseClient:
         assert self.response.status_code == expected, \
             f"Expected {expected}, got {self.response.status_code}"
 
-    def check_field(self, key, expected):
+    def check_fields(self, expected: dict):
         assert self.json is not None, "No JSON in response"
-        assert key in self.json, f"{key} not found in response JSON"
-        assert self.json[key] == expected, \
-            f"{key}: expected {expected}, got {self.json[key]}"
+
+        for key, expected_value in expected.items():
+            actual_value = self.json.get(key)
+            assert actual_value == expected_value, \
+                f"{key}: expected {expected_value}, got {actual_value}"

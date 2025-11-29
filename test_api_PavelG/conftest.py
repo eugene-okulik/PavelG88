@@ -16,34 +16,29 @@ def session():
     return requests.Session()
 
 
-@pytest.fixture(scope="session")
-def base_url():
-    return BASE_URL
+@pytest.fixture
+def creator(session):
+    return CreateObject(BASE_URL, session)
 
 
 @pytest.fixture
-def creator(base_url, session):
-    return CreateObject(base_url, session)
+def getter(session):
+    return GetObject(BASE_URL, session)
 
 
 @pytest.fixture
-def getter(base_url, session):
-    return GetObject(base_url, session)
+def updater(session):
+    return PutObject(BASE_URL, session)
 
 
 @pytest.fixture
-def updater(base_url, session):
-    return PutObject(base_url, session)
+def patcher(session):
+    return PatchObject(BASE_URL, session)
 
 
 @pytest.fixture
-def patcher(base_url, session):
-    return PatchObject(base_url, session)
-
-
-@pytest.fixture
-def deleter(base_url, session):
-    return DeleteObject(base_url, session)
+def deleter(session):
+    return DeleteObject(BASE_URL, session)
 
 
 @pytest.fixture

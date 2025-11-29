@@ -20,5 +20,4 @@ def test_create_object(creator, name, data):
         creator.check_status(200)
 
     with allure.step("Проверяем поля"):
-        creator.check_field("name", name)
-        creator.check_field("data", data)
+        creator.check_fields(payload)

@@ -11,4 +11,4 @@ def test_patch_object(patcher, new_obj):
         patcher.check_status(200)
 
     with allure.step("Проверяем поля"):
-        patcher.check_field("name", "patched_name")
+        patcher.check_fields(payload)
