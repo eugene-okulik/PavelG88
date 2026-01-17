@@ -11,7 +11,6 @@ def driver():
     yield chrome_driver
 
 
-
 def test_text_check(driver):
     input_data = "testword"
 
