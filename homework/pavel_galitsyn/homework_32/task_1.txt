@@ -1,0 +1,9 @@
+G  >  ESC->       *  Go to last line in file
+g  <  ESC-<       *  Go to first line in file
+z                 *  Forward  one window
+e  ^E  j  ^N  CR  *  Forward  one line
+y  ^Y  k  ^K  ^P  *  Backward one line
+/pattern          *  Search forward for (N-th) matching line.
+?pattern          *  Search backward for (N-th) matching line.
+n                 *  Repeat previous search (for N-th occurrence).
+N                 *  Repeat previous search in reverse direction.
