@@ -1,0 +1,9 @@
+/dev/null - character device
+/dev/zero - character device
+/dev/sda -  character device
+/dev/tty - character device
+/root - directory
+/etc/passwd - regular file
+/proc/mounts - symbolic link
+/bin/ls - regular file
+/bin/zcat -regular file
